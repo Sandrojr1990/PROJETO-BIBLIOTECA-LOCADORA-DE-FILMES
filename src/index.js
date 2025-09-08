@@ -8,7 +8,7 @@ class Livro {
 
     }
 
-    emprestado() {
+    emprestar() {
         if (!this.emprestado) {
             this.emprestado = true;
             console.log(`Livro ${this.titulo} emprestado!.`);
@@ -22,7 +22,7 @@ class Livro {
             this.emprestado = false;
             console.log(`Livro ${this.titulo} devolvido!.`);
         } else {
-            console.console.log(`Livro ${this.titulo} não está emprestado!.`);
+            console.log(`Livro ${this.titulo} não está emprestado!.`);
         }   
     }       
 }
@@ -30,18 +30,25 @@ class Livro {
 // Classe Filme
 
 class Filme {
-    constructor(titulo,diretor) {
+    constructor(titulo, diretor) {
         this.titulo = titulo;
         this.diretor = diretor;
         this.emprestado = false;
     }
 
-    emprestado() {
+    emprestar() {
         if (!this.emprestado) {
             this.emprestado = true;
             console.log(`Filme ${this.titulo} emprestado!.`);
         } else {
             console.log(`Filme ${this.titulo} já está emprestado!.`);
+        }
+    }
+
+    devolver() {
+        if (this.emprestado) {
+            this.emprestado = false;
+            console.log(`Filme ${this.titulo} devolvido!.`);
         }
     }
 
@@ -53,7 +60,7 @@ class Filme {
 class Usuario {
     constructor(nome) {
         this.nome = nome;
-        this.itensEmpretado = [];
+        this.itensEmpretados = [];
     }
 
     pegarItem(item) {
@@ -67,11 +74,11 @@ class Usuario {
     }
 
     devolverItem(item) {
-        const index = this.itensEmpretados.indexof(item);
+        const index = this.itensEmpretados.indexOf(item);
         if (index !== -1) {
         item.devolver();
         this.itensEmpretados.splice(index, 1);
-        console.log(`Usuário ${this.nome} devolver o item ${item.titulo}.`);
+        console.log(`Usuário ${this.nome} devolveu o item ${item.titulo}.`);
         } else {
             console.log(`Usuário ${this.nome} não tem o item ${item.titulo} emprestado.`);
         }
@@ -80,7 +87,7 @@ class Usuario {
     listarItens() {
         console.log(`Itens emprestados por ${this.nome}:`);
         this.itensEmpretados.forEach((item) => {
-            console.log(`- ${itemtitulo}`);
+            console.log(`- ${item.titulo}`);
         });
     }
 }
@@ -98,7 +105,7 @@ class Biblioteca {
     }
 
     listarLivros() {
-        console.log('Livros na biblioteca:');
+        console.log('Livros da biblioteca:');
         this.livros.forEach((livro) => {
             console.log(`- ${livro.titulo} (${livro.autor}) - ${livro.emprestado ? 'Emprestado' : 'Disponivel'}`);
         });
@@ -138,6 +145,51 @@ const livro1 = new Livro('O Alienista', 'Machado de Assis');
 const livro2 = new Livro('A Hora da Estrela', 'Clarice Lispector');
 const filme1 = new Filme('Cidade de Deus', 'Fernando Meirelles');
 const filme2 = new Filme('Tropa de Elite', 'José Padilha');
+
+
+// Adicionando livros e filmes às coleções
+
+
+biblioteca.adicionarLivro(livro1);
+biblioteca.adicionarLivro(livro2);
+locadora.adicionarFilme(filme1);
+locadora.adicionarFilme(filme2);
+
+// Listando livros e filmes disponíveis
+
+
+biblioteca.listarLivros();
+locadora.listarFilmes();
+
+// Usuário pega um livro emprestado
+
+
+usuario1.pegarItem(livro1);
+
+
+// Usuário tenta pegar o mesmo livro novamente
+
+
+usuario2.pegarItem(livro1);
+
+
+// Usuário devolve o livro
+
+
+usuario1.devolverItem(livro1);
+
+
+// Usuário pega um filme emprestado
+
+
+usuario2.pegarItem(filme2);
+
+
+// Listando itens emprestados por cada usuário
+
+
+usuario1.listarItens();
+usuario2.listarItens();
 
 
 
