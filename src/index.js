@@ -1,0 +1,143 @@
+// Classe Livro
+
+class Livro {
+    constructor(titulo, autor) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.emprestado = false;
+
+    }
+
+    emprestado() {
+        if (!this.emprestado) {
+            this.emprestado = true;
+            console.log(`Livro ${this.titulo} emprestado!.`);
+        } else {
+            console.log(`Livro ${this.titulo} já está emprestado!.`);
+        }  
+    }
+
+    devolver() {
+        if (this.emprestado) {
+            this.emprestado = false;
+            console.log(`Livro ${this.titulo} devolvido!.`);
+        } else {
+            console.console.log(`Livro ${this.titulo} não está emprestado!.`);
+        }   
+    }       
+}
+
+// Classe Filme
+
+class Filme {
+    constructor(titulo,diretor) {
+        this.titulo = titulo;
+        this.diretor = diretor;
+        this.emprestado = false;
+    }
+
+    emprestado() {
+        if (!this.emprestado) {
+            this.emprestado = true;
+            console.log(`Filme ${this.titulo} emprestado!.`);
+        } else {
+            console.log(`Filme ${this.titulo} já está emprestado!.`);
+        }
+    }
+
+
+}
+
+// Classe Usuário
+
+class Usuario {
+    constructor(nome) {
+        this.nome = nome;
+        this.itensEmpretado = [];
+    }
+
+    pegarItem(item) {
+        if (!item.emprestado) {
+            item.emprestar();
+            this.itensEmpretados.push(item);
+            console.log(`Usuário ${this.nome} pegou o item ${item.titulo}.`);
+        } else {
+            console.log(`Item ${item.titulo} já está emprestado!.`);
+        }
+    }
+
+    devolverItem(item) {
+        const index = this.itensEmpretados.indexof(item);
+        if (index !== -1) {
+        item.devolver();
+        this.itensEmpretados.splice(index, 1);
+        console.log(`Usuário ${this.nome} devolver o item ${item.titulo}.`);
+        } else {
+            console.log(`Usuário ${this.nome} não tem o item ${item.titulo} emprestado.`);
+        }
+    }
+
+    listarItens() {
+        console.log(`Itens emprestados por ${this.nome}:`);
+        this.itensEmpretados.forEach((item) => {
+            console.log(`- ${itemtitulo}`);
+        });
+    }
+}
+
+// Classe Biblioteca
+
+class Biblioteca {
+    constructor() {
+        this.livros = [];
+    }
+
+    adicionarLivro(livro) {
+        this.livros.push(livro);
+        console.log(`Livro ${livro.titulo} adicionado à biblioteca.`);
+    }
+
+    listarLivros() {
+        console.log('Livros na biblioteca:');
+        this.livros.forEach((livro) => {
+            console.log(`- ${livro.titulo} (${livro.autor}) - ${livro.emprestado ? 'Emprestado' : 'Disponivel'}`);
+        });
+    }
+}
+
+// Classe Locadora
+
+class Locadora {
+    constructor() {
+        this.filmes = [];
+    }
+
+    adicionarFilme(filme) {
+        this.filmes.push(filme);
+        console.log(`Filme ${filme.titulo} adicionado à locadora.`);
+    }
+
+    listarFilmes() {
+        console.log('Filmes da locadora:');
+        this.filmes.forEach((filme) => {
+            console.log(`- ${filme.titulo} (${filme.diretor}) - ${filme.emprestado ? 'Emprestado' : 'Disponìvel'}`);
+        });
+    }
+}
+
+// Criar objetos
+
+const biblioteca = new Biblioteca();
+const locadora = new Locadora();
+const usuario1 = new Usuario('Sandro');
+const usuario2 = new Usuario('Roberto');
+
+// Adicionar livros e filmes
+
+const livro1 = new Livro('O Alienista', 'Machado de Assis');
+const livro2 = new Livro('A Hora da Estrela', 'Clarice Lispector');
+const filme1 = new Filme('Cidade de Deus', 'Fernando Meirelles');
+const filme2 = new Filme('Tropa de Elite', 'José Padilha');
+
+
+
