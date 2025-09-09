@@ -60,24 +60,28 @@ class Filme {
 class Usuario {
     constructor(nome) {
         this.nome = nome;
-        this.itensEmpretados = [];
+    this.itensEmprestados = [];
     }
 
     pegarItem(item) {
+        if (this.itensEmprestados.length >= 3) {
+            console.log(`Usuário ${this.nome} já atingiu o limite de 3 itens emprestados.`);
+            return;
+        }
         if (!item.emprestado) {
             item.emprestar();
-            this.itensEmpretados.push(item);
+            this.itensEmprestados.push(item);
             console.log(`Usuário ${this.nome} pegou o item ${item.titulo}.`);
         } else {
-            console.log(`Item ${item.titulo} já está emprestado!.`);
+            console.log(`Item ${item.titulo} já está emprestado!`);
         }
     }
 
     devolverItem(item) {
-        const index = this.itensEmpretados.indexOf(item);
+    const index = this.itensEmprestados.indexOf(item);
         if (index !== -1) {
         item.devolver();
-        this.itensEmpretados.splice(index, 1);
+    this.itensEmprestados.splice(index, 1);
         console.log(`Usuário ${this.nome} devolveu o item ${item.titulo}.`);
         } else {
             console.log(`Usuário ${this.nome} não tem o item ${item.titulo} emprestado.`);
@@ -86,7 +90,7 @@ class Usuario {
 
     listarItens() {
         console.log(`Itens emprestados por ${this.nome}:`);
-        this.itensEmpretados.forEach((item) => {
+        this.itensEmprestados.forEach((item) => {
             console.log(`- ${item.titulo}`);
         });
     }
@@ -138,58 +142,65 @@ const biblioteca = new Biblioteca();
 const locadora = new Locadora();
 const usuario1 = new Usuario('Sandro');
 const usuario2 = new Usuario('Roberto');
+const usuario3 = new Usuario('Silva');
+const usuario4 = new Usuario('Clayton');
 
 // Adicionar livros e filmes
 
 const livro1 = new Livro('O Alienista', 'Machado de Assis');
 const livro2 = new Livro('A Hora da Estrela', 'Clarice Lispector');
+const livro3 = new Livro('O Meu Pé de Laranja Lima', 'José Mauro de Vasconcelos');
+const livro4 = new Livro('Dom Casmurro', 'Machado de Assis');
 const filme1 = new Filme('Cidade de Deus', 'Fernando Meirelles');
 const filme2 = new Filme('Tropa de Elite', 'José Padilha');
-
+const filme3 = new Filme('Central do Brasil', 'Walter Salles');
+const filme4 = new Filme('O Auto da Compadecida', 'Guel Arraes');
 
 // Adicionando livros e filmes às coleções
 
-
 biblioteca.adicionarLivro(livro1);
 biblioteca.adicionarLivro(livro2);
+biblioteca.adicionarLivro(livro3);
+biblioteca.adicionarLivro(livro4);
 locadora.adicionarFilme(filme1);
 locadora.adicionarFilme(filme2);
+locadora.adicionarFilme(filme3);
+locadora.adicionarFilme(filme4);
 
 // Listando livros e filmes disponíveis
-
 
 biblioteca.listarLivros();
 locadora.listarFilmes();
 
 // Usuário pega um livro emprestado
 
-
 usuario1.pegarItem(livro1);
-
+usuario3.pegarItem(livro3);
+usuario3.pegarItem(livro4);
+usuario4.pegarItem(livro1);
 
 // Usuário tenta pegar o mesmo livro novamente
 
-
 usuario2.pegarItem(livro1);
-
 
 // Usuário devolve o livro
 
-
 usuario1.devolverItem(livro1);
-
 
 // Usuário pega um filme emprestado
 
-
 usuario2.pegarItem(filme2);
-
+usuario3.pegarItem(filme3);
+usuario1.pegarItem(filme1);
+usuario3.pegarItem(filme4);
 
 // Listando itens emprestados por cada usuário
 
-
 usuario1.listarItens();
 usuario2.listarItens();
+usuario3.listarItens();
+usuario4.listarItens();
+
 
 
 
