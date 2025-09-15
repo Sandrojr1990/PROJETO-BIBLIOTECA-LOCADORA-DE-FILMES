@@ -172,35 +172,133 @@ locadora.adicionarFilme(filme4);
 biblioteca.listarLivros();
 locadora.listarFilmes();
 
-// Usuário pega um livro emprestado
+const readline = require('readline')
+const prompt = readline.createInterface({
+    input: process.stdin, output: process.stdout
+})
 
-usuario1.pegarItem(livro1);
-usuario3.pegarItem(livro3);
-usuario3.pegarItem(livro4);
-usuario4.pegarItem(livro1);
+function perguntar(pergunta){
+    return new Promise((resolve) => {
+        prompt.question(pergunta, (resposta) => {
+            resolve(resposta.trim());
+        });
+    });
+}
 
-// Usuário tenta pegar o mesmo livro novamente
+async function MostraMenu() {
+    console.log('/n Menu de opções:');
+    console.log('1 - Adicionar livros');
+    console.log('2 - Adicionar filmes');
+    console.log('3 - Adicionar Usúario');
+    console.log('4 - Listar Livros');
+    console.log('5 - Listar Filmes');
+    console.log('6 - pegar Livro emprestado');
+    console.log('7 - devolver Livro emprestado');
+    console.log('8 - pegar Filme emprstado');
+    console.log('9 - devolver Filme emprestado');
+    console.log('0 - Sair');
 
-usuario2.pegarItem(livro1);
+    while (true) {
 
-// Usuário devolve o livro
+        const opcao = await perguntar('Escolha uma opção:');
 
-usuario1.devolverItem(livro1);
+        switch (opcao) {
+            case '1':
+                const tituloLivro = await perguntar('Digite o título do livro:');
+                const autorLivro = await perguntar('Digite o autor do livro:');
+                adicionarLivro(new Livro(tituloLivro, autorLivro));
+                break;
+                case '2':
+                    const tituloFilme = await perguntar('Digite o título do filme:');
+                    const diretorFilme = await perguntar('Digite o diretor do filme:');
+                    adicionarFilme(new Filme(tituloFilme, diretorFilme));
+                    break;
+                    case '3':
+                        const nomeUsuario = await perguntar('Digite o nome do usuário:');
+                        const usuario = new Usuario(nomeUsuario);
+                        usuarios.push(usuario);
+                        console.log('Usuário ${nomeUsuario} adicionado com sucesso!');
+                        break;
+                        case '4':
+                            biblioteca.listarLivros();
+                            break;
+                            case '5':
+                                locadora.listarFilmes();
+                                break;
+                                case '6':
+                                    const tituloLivroEmprestado = await perguntar('Digite o título do livro que deseja emprestar:');
+                                    const livroEmprestimo = biblioteca.livros.find(livro => livro.titulo === tituloLivroEmpretimo);
+                                    if (livroEmprestimo) {
+                                        const nomeUsuarioEmprestimo = await perguntar( 'Digite o nome do usuário que deseja pegar o livro emprestado:');
+                                        const usuarioEncontrado = usuarios.find(usuario => usuario.nome === nomeUsuarioEmprestimo);
+                                        if (usuarioEncontrado) {
+                                            usuarioEncontrado.pegarItem(livroEmprestimo);
+                                        } else {
+                                            console.log('Usuário não ncontrado!');                                          
+                                         }
+                                        } else {
+                                            console.log('Livro não encontrado!');
+                                        }
+                                        break;
+                                        case '7':
+                                            const tituloLivroDevolvido = await perguntar('Digite o título do livro que deseja devlver:')
+                                            const livroDevolucao = biblioteca.livros.find(livro => livro.titulo === tituloLivroDevolvido);
+                                            if (livroDevolucao) {
+                                                const nomeUsuarioDevolucao = await perguntar('Digite o nome do usuário que deseja devolver o livro:');
+                                                const usuarioEncontrado = usuarios.find(usuario => usuario.nome === nomeUsuarioDevolucao);
+                                                if (usuarioEncontrado) {
+                                                    usuarioEncontrado.devolverItem(livroDevolucao);
+                                                } else {
+                                                    console.log('Usuário não encontrado!');
+                                                }
+                                                 } else {
+                                                    console.log('Livro não encontrado!');
+                                                }
+                                                break;
+                                                case '8':
+                                                    const tituloFilmeEmprestado = await perguntar('Digite o título do filme que deseja emprestar:');
+                                                    const filmeEmprestimo = locadora.filmes.find(filme => filme.titulo === tituloFilmeEmprestimo);
+                                                    if (filmeEmprestimo) {
+                                                        const nomeUsuarioEmprestimo = await perguntar('Digite o nome do usúario que deseja pegar o filme emprestado:');
+                                                        const usuarioEncontrado = usuarios.find(usuario => usuario.nome === nomeUsuarioEmprestimo);
+                                                        if (usuarioEncontrado) {
+                                                            usuarioEncontrado.pegarItem(filmeEmprestimo);
+                                                         } else {
+                                                            console.log('Usuário não encontrado!');
+                                                        }
+                                                         } else {
+                                                            console.log('Filme não encontrado!');
+                                                         }
+                                                            break;
+                                                            case '9':
+                                                                const tituloFilmeDevolvido = await perguntar('Digite o título do filme que deseja devolver:');
+                                                                const filmeDevolucao = locadora.filmes.find(filme => filme.titulo === tituloFilmeDevolucao);
+                                                                if (filmeDevolucao) {
+                                                                    const nomeUsuarioDevolucao = await perguntar('Digite o nome do usuário que deseja devolver o filme:');
+                                                                    const usuarioEncontrado = usuarios.find(usuario => usuario.nome === nomeUsuarioDevolucao);
+                                                                    if (usuarioEncontrado) {
+                                                                        usuarioEncontrado.devolverItem(filmeDevolucao);
+                                                                    } else {
+                                                                        console.log('Usuário não encontrado!');
+                                                                    }
+                                                                    } else {
+                                                                        console.log('Filme não encontrado!');
+                                                                    }
+                                                                    break;
+                                                                    case '0':
+                                                                        console.log('Saindo');
+                                                                        prompt.close();
+                                                                        return;
+                                                                        default:
+                                                                            console.log('Opção inválida! por favor, tente novamente.');
+                                                                }
+                                                    }
 
-// Usuário pega um filme emprestado
+                                            }
 
-usuario2.pegarItem(filme2);
-usuario3.pegarItem(filme3);
-usuario1.pegarItem(filme1);
-usuario3.pegarItem(filme4);
+                                            MostraMenu();
+                                    
 
-// Listando itens emprestados por cada usuário
-
-usuario1.listarItens();
-usuario2.listarItens();
-usuario3.listarItens();
-usuario4.listarItens();
-
-
-
-
+        
+    
+    
